@@ -1,0 +1,31 @@
+import { IDatabaseSingleton } from "@/domain/entities/IDatabaseSingleton";
+import { Sequelize } from '@sequelize/core';
+import { IDatabase } from "@/domain/entities/IDatabase";
+
+import { AllModelsArray } from "../models";
+
+class SQLiteDatabaseSingleton implements IDatabaseSingleton {
+    private static instance: IDatabase;
+
+    async getInstance(): Promise<IDatabase> {
+        if (!SQLiteDatabaseSingleton.instance) {
+            const sequelize = new Sequelize('sqlite::memory:', {
+                models: AllModelsArray
+            });
+
+            const database: IDatabase = {
+                connect: () => sequelize.sync().then((res) => {
+                    console.log('SQLite database connected!')
+
+                    return res
+                })
+            };
+
+            SQLiteDatabaseSingleton.instance = database;
+        }
+
+        return SQLiteDatabaseSingleton.instance
+    }
+}
+
+export { SQLiteDatabaseSingleton }

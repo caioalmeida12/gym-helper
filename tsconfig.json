@@ -1,20 +1,23 @@
 {
   "compilerOptions": {
-    "target": "ESNext",
-    "module": "ESNext",
+    "target": "esnext",
+    "module": "esnext",
     "moduleResolution": "Bundler",
     "strict": true,
     "types": [
-      "node"
+      "node",
+      "jest"
     ],
     "jsx": "react-jsx",
     "jsxImportSource": "hono/jsx",
-    "rootDir": "src",
+    "rootDir": ".",
     "baseUrl": ".",
     "outDir": "dist",
     "paths": {
       "@/*": ["src/*"]
     },
-    "experimentalDecorators": true
+    "experimentalDecorators": true,
+    "esModuleInterop": true
   },
+  "include": ["src/**/*", "tests/**/*"]
 }
