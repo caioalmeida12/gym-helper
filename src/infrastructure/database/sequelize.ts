@@ -1,5 +1,9 @@
-import { Sequelize } from "@sequelize/core";
+import { Sequelize, importModels } from '@sequelize/core';
+import { fileURLToPath } from 'node:url';
+import { dirname } from 'node:path';
 
-const sequelize = new Sequelize("sqlite::memory:")
+const __dirname = dirname(fileURLToPath(import.meta.url));
 
-export default sequelize;
+export const sequelize = new Sequelize('sqlite::memory:', {
+  models: await importModels(__dirname + '/**/*.model.{ts,js}'),
+});
