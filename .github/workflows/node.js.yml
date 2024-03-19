@@ -31,5 +31,4 @@ jobs:
           ${{ runner.os }}-pnpm-
     - run: npm install -g pnpm
     - run: pnpm install --frozen-lockfile
-    - run: pnpm run build --if-present
     - run: pnpm test
