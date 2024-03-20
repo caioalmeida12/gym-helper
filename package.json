@@ -6,9 +6,11 @@
   "dependencies": {
     "@hono/node-server": "^1.8.2",
     "@sequelize/core": "7.0.0-alpha.38",
+    "@sequelize/validator.js": "7.0.0-alpha.38",
     "@types/jest": "^29.5.12",
     "hono": "^4.1.2",
-    "sqlite3": "^5.1.7"
+    "sqlite3": "^5.1.7",
+    "zod": "^3.22.4"
   },
   "devDependencies": {
     "@jest/types": "^29.6.3",

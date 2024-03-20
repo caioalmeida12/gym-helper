@@ -14,10 +14,18 @@
     "baseUrl": ".",
     "outDir": "dist",
     "paths": {
-      "@/*": ["src/*"]
+      "@/domain/*": ["./src/domain/*"],
+      "@/infrastructure/*": ["./src/infrastructure/*"],
+      "@/tests/*": ["./tests/*"],
     },
     "experimentalDecorators": true,
     "esModuleInterop": true
   },
-  "include": ["src/**/*", "tests/**/*"]
+  "include": [
+    "src/**/*", 
+    "tests/**/*",
+    "jest.config.js",
+    "eslint.config.js",
+    ".eslintrc.cjs"
+  ],
 }

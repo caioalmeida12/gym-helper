@@ -9,7 +9,10 @@ interface ExercicioCommandEntity {
 
 interface ExercicioQueryEntity extends ExercicioCommandEntity{
     id: string;
+    created_at: Date;
+    updated_at: Date;
+    deleted_at?: Date;
 }
 
-export type ExercicioCommand = ExercicioCommandEntity;
-export type ExercicioQuery = ExercicioQueryEntity;
+export type IExercicioCommand = ExercicioCommandEntity;
+export type IExercicioQuery = ExercicioQueryEntity;
