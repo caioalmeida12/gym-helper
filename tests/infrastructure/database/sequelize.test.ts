@@ -26,11 +26,11 @@ describe("Sequelize", () => {
         });
 
         it("Should be able to query the database", async () => {
-            const result = await database.query(sql`SELECT 1 + 1 AS result;`);
+            const result = (await database.query(sql`SELECT 1 + 1 AS result;`))[0] as { result: number }[];
 
             expect(result).toBeDefined();
-            expect(result[0][0]).toHaveProperty('result');
-            expect((result[0][0] as any).result).toBe(2);
+            expect(result[0]).toHaveProperty('result');
+            expect(result[0].result).toBe(2);
         })
 
         afterAll(async () => {

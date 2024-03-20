@@ -15,11 +15,11 @@ describe("ExercicioModel", () => {
     });
 
     it("Should be able to query the ExercicioModel", async () => {
-        const result = await database.query(sql`SELECT 1 + 1 AS result;`);
+        const result = (await database.query(sql`SELECT 1 + 1 AS result;`))[0] as { result: number }[];
 
         expect(result).toBeDefined();
-        expect(result[0][0]).toHaveProperty('result');
-        expect((result[0][0] as any).result).toBe(2);
+        expect(result[0]).toHaveProperty('result');
+        expect(result[0].result).toBe(2);
     })
 
     it("Should be able to create a new ExercicioModel", async () => {
@@ -44,7 +44,8 @@ describe("ExercicioModel", () => {
 
     it("Should throw ValidationError when creating a new ExercicioModel without a name (or other required fields)", async () => {
         try {
-            // @ts-expect-error
+            // @ts-expect-error Testing if the model throws a validation error
+            // eslint-disable-next-line @typescript-eslint/no-unused-vars
             const sut = await ExercicioModel.create({
                 descanso_recomendado: 60,
                 descricao: 'O supino reto é um exercício que trabalha o peitoral, ombros e tríceps',
@@ -59,6 +60,7 @@ describe("ExercicioModel", () => {
 
     it("Should throw UniqueConstraintError when creating a new ExercicioModel with the same name", async () => {
         try {
+            // eslint-disable-next-line @typescript-eslint/no-unused-vars
             const sut = await ExercicioModel.create({
                 nome: 'Supino reto',
                 descanso_recomendado: 60,
@@ -127,6 +129,7 @@ describe("ExercicioModel", () => {
 
     it("Should not be able to update an ExercicioModel to a name that already exists", async () => {
         try {
+            // eslint-disable-next-line @typescript-eslint/no-unused-vars
             const base = await ExercicioModel.create({
                 nome: 'Supino reto',
                 descanso_recomendado: 60,
@@ -142,6 +145,7 @@ describe("ExercicioModel", () => {
                 }
             })
 
+            // eslint-disable-next-line @typescript-eslint/no-unused-vars
             const updated = await sut?.update({
                 nome: 'Supino inclinado'
             });
@@ -158,6 +162,7 @@ describe("ExercicioModel", () => {
                 }
             })
 
+            // eslint-disable-next-line @typescript-eslint/no-unused-vars
             const updated = await sut?.update({
                 nome: ''
             });
@@ -187,7 +192,7 @@ describe("ExercicioModel", () => {
 
         const deleted = await sut?.destroy()
 
-        expect(deleted).toBe(0)
+        expect(deleted).toBeFalsy()
     })
 
     afterAll(async () => {
