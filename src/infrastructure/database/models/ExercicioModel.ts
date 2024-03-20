@@ -51,7 +51,7 @@ export class ExercicioModel extends Model<InferAttributes<ExercicioModel>, Infer
     })
     declare regime_de_execucao_recomendado: string;
 
-    @Attribute(DataTypes.TINYINT(3))
+    @Attribute(DataTypes.TINYINT(4))
     @NotNull
     declare descanso_recomendado: number;
 }

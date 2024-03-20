@@ -9,39 +9,39 @@ const ExercicioZodDTO = z.object({
     ),
     nome: z.preprocess(
         (val) => String(val),
-        z.string(),
-    ),
-    descanso_recomendado: z.preprocess(
-        (val) => Number(val),
-        z.number(),
+        z.string().min(3).max(64),
     ),
     descricao: z.preprocess(
         (val) => String(val),
-        z.string(),
-    ),
-    dificuldade: z.preprocess(
-        (val) => Number(val),
-        z.number(),
-    ),
-    regime_de_execucao_recomendado: z.preprocess(
-        (val) => String(val),
-        z.string(),
+        z.string().min(3).max(512),
     ),
     unidade_de_execucao: z.preprocess(
         (val) => String(val),
-        z.string(),
+        z.enum(['CARGA', 'TEMPO', 'REPETICOES', 'METROS']),
+    ),
+    dificuldade: z.preprocess(
+        (val) => Number(val),
+        z.number().int().min(0).max(1),
+    ),
+    regime_de_execucao_recomendado: z.preprocess(
+        (val) => String(val),
+        z.string().min(3).max(32).regex(/^[0-9]+x[0-9]+$/),
+    ),
+    descanso_recomendado: z.preprocess(
+        (val) => Number(val),
+        z.number().int().min(0).max(9999),
     ),
     created_at: z.preprocess(
-        (val) => new String(val),
+        (val) => new Date(String(val)),
         z.date(),
     ),
     updated_at: z.preprocess(
-        (val) => new String(val),
+        (val) => new Date(String(val)),
         z.date(),
     ),
     deleted_at: z.preprocess(
-        (val) => val ? new String(val) : val,
-        z.date().optional(),
+        (val) => val ? new Date(String(val)) : val,
+        z.date().nullable(),
     ),
 });
 
