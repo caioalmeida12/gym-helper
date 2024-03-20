@@ -32,8 +32,6 @@ describe("ExercicioModel", () => {
             unidade_de_execucao: 'REPETICOES'
         })).toJSON() as ExercicioQuery
 
-        console.log(sut)
-
         expect(sut).toHaveProperty('id')
         expect(sut.id).toBeTruthy()
         expect(sut.id.length).toBe(36)
@@ -127,40 +125,70 @@ describe("ExercicioModel", () => {
         expect(updated).toBeUndefined()
     })
 
-    it("Should not be able to update an ExercicioModel with a name that already exists", async () => {
+    it("Should not be able to update an ExercicioModel to a name that already exists", async () => {
         try {
-            const sut = (await ExercicioModel.findOne({
-                where: {
-                    nome: 'Supino inclinado'
-                }
-            }))
-
-            const updated = await sut?.update({
-                nome: 'Supino reto'
+            const base = await ExercicioModel.create({
+                nome: 'Supino reto',
+                descanso_recomendado: 60,
+                descricao: 'O supino reto é um exercício que trabalha o peitoral, ombros e tríceps',
+                dificuldade: 3,
+                regime_de_execucao_recomendado: '3x10',
+                unidade_de_execucao: 'REPETICOES'
             })
 
-            
+            const sut = await ExercicioModel.findOne({
+                where: {
+                    nome: 'Supino reto'
+                }
+            })
+
+            const updated = await sut?.update({
+                nome: 'Supino inclinado'
+            });
         } catch (error) {
             expect(error).toBeInstanceOf(UniqueConstraintError)
         }
     })
 
     it("Should not be able to update an ExercicioModel with an empty name (or any other required fields)", async () => {
+        try {
+            const sut = await ExercicioModel.findOne({
+                where: {
+                    nome: 'Supino inclinado'
+                }
+            })
+
+            const updated = await sut?.update({
+                nome: ''
+            });
+        } catch (error) {
+            expect(error).toBeInstanceOf(ValidationError);
+        }
+    });
+
+    it("Should be able to delete an ExercicioModel", async () => {
         const sut = await ExercicioModel.findOne({
             where: {
                 nome: 'Supino inclinado'
             }
         })
 
-        try {
-            const updated = await sut?.update({
-                nome: ''
-            });
-        } catch (error) {
-            console.error(error);
-            expect(error).toBeInstanceOf(TypeError);
-        }
-    });
+        const deleted = await sut?.destroy()
+
+        expect(deleted).toBe(1)
+    })
+
+    it("Should not be able to delete an ExercicioModel that does not exist", async () => {
+        const sut = await ExercicioModel.findOne({
+            where: {
+                nome: 'Supino inclinado'
+            }
+        })
+
+        const deleted = await sut?.destroy()
+
+        expect(deleted).toBe(0)
+    })
 
     afterAll(async () => {
         await database.close();

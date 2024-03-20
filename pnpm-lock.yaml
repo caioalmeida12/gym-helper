@@ -11,6 +11,9 @@ dependencies:
   '@sequelize/core':
     specifier: 7.0.0-alpha.38
     version: 7.0.0-alpha.38(sqlite3@5.1.7)
+  '@sequelize/validator.js':
+    specifier: 7.0.0-alpha.38
+    version: 7.0.0-alpha.38(sqlite3@5.1.7)
   '@types/jest':
     specifier: ^29.5.12
     version: 29.5.12
@@ -1017,6 +1020,23 @@ packages:
     dependencies:
       '@types/lodash': 4.17.0
       lodash: 4.17.21
+    dev: false
+
+  /@sequelize/validator.js@7.0.0-alpha.38(sqlite3@5.1.7):
+    resolution: {integrity: sha512-HFa7+LJkzE/6V2RqmUM9Mxa2n6oFo1iB4SAtbdeRGsHcTPwxrjfrxvRVrGhi+wkE4fTt9SqFPoMkHm0wFCkKRA==}
+    dependencies:
+      '@sequelize/core': 7.0.0-alpha.38(sqlite3@5.1.7)
+      lodash: 4.17.21
+    transitivePeerDependencies:
+      - ibm_db
+      - mariadb
+      - mysql2
+      - odbc
+      - pg
+      - snowflake-sdk
+      - sqlite3
+      - supports-color
+      - tedious
     dev: false
 
   /@sinclair/typebox@0.27.8:

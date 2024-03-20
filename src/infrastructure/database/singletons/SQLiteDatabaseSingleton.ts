@@ -12,11 +12,13 @@ class SQLiteDatabaseSingleton implements IDatabaseSingleton {
             const sequelize = new Sequelize('sqlite::memory:', {
                 models: AllModelsArray,
                 logging: false,
-                // storage: './src/infrastructure/database/singletons/database.sqlite3'
+                storage: './src/infrastructure/database/singletons/database.sqlite3'
             });
 
             const database: IDatabase = {
-                connect: () => sequelize.sync().then((res) => {
+                connect: () => sequelize.sync({
+                    force: true
+                }).then((res) => {
                     console.log('SQLite database connected!')
 
                     return res
