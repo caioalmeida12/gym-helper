@@ -1,7 +1,7 @@
 import Sequelize, { sql, UniqueConstraintError, ValidationError } from "@sequelize/core";
 import { connectDatabaseHelper, chosenDatabase } from "@/tests/lib/connectDatabaseHelper";
 import { ExercicioModel } from "@/infrastructure/database/models/ExercicioModel";
-import { ExercicioQuery } from "@/domain/entities/IExercicio";
+import { IExercicioQuery } from "@/domain/entities/IExercicio";
 
 describe("ExercicioModel", () => {
     let database: Sequelize;
@@ -30,7 +30,7 @@ describe("ExercicioModel", () => {
             dificuldade: 3,
             regime_de_execucao_recomendado: '3x10',
             unidade_de_execucao: 'REPETICOES'
-        })).toJSON() as ExercicioQuery
+        })).toJSON() as IExercicioQuery
 
         expect(sut).toHaveProperty('id')
         expect(sut.id).toBeTruthy()
@@ -105,7 +105,7 @@ describe("ExercicioModel", () => {
 
         const updated = (await sut.update({
             nome: 'Supino inclinado'
-        })).toJSON() as ExercicioQuery
+        })).toJSON() as IExercicioQuery
 
         expect(updated).toHaveProperty('id')
         expect(updated).toHaveProperty('created_at')

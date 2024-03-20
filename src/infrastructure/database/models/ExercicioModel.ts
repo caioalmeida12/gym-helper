@@ -2,7 +2,7 @@ import { DataTypes, Model, InferAttributes, InferCreationAttributes, CreationOpt
 import { Attribute, PrimaryKey, NotNull, Table, Unique, Default } from '@sequelize/core/decorators-legacy';
 import { Len, Min, Max } from '@sequelize/validator.js';
 
-import { ExercicioCommand } from '@/domain/entities/IExercicio';
+import { IExercicioCommand } from '@/domain/entities/IExercicio';
 
 @Table({
     tableName: 'exercicios',
@@ -10,7 +10,7 @@ import { ExercicioCommand } from '@/domain/entities/IExercicio';
     createdAt: 'created_at',
     updatedAt: 'updated_at',
 })
-export class ExercicioModel extends Model<InferAttributes<ExercicioModel>, InferCreationAttributes<ExercicioModel>> implements ExercicioCommand {
+export class ExercicioModel extends Model<InferAttributes<ExercicioModel>, InferCreationAttributes<ExercicioModel>> implements IExercicioCommand {
     @Attribute(DataTypes.UUIDV4)
     @PrimaryKey
     @Default(sql.uuidV4)

@@ -1,10 +1,10 @@
-import { ExercicioCommand, ExercicioQuery } from "../entities/IExercicio";
+import { IExercicioCommand, IExercicioQuery } from "../entities/IExercicio";
 
 interface IExercicioRepository {
-    create(data: ExercicioQuery): Promise<ExercicioCommand>;
-    findById(id: string): Promise<ExercicioQuery | undefined>;
-    findAll(): Promise<ExercicioQuery[]>;
-    update(id: string, data: ExercicioQuery): Promise<ExercicioCommand>;
+    create(data: IExercicioQuery): Promise<IExercicioCommand>;
+    findById(id: string): Promise<IExercicioQuery | undefined>;
+    findAll(): Promise<IExercicioQuery[]>;
+    update(id: string, data: IExercicioQuery): Promise<IExercicioCommand>;
     delete(id: string): Promise<void>;
 }
 
