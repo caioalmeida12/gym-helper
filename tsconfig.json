@@ -14,7 +14,9 @@
     "baseUrl": ".",
     "outDir": "dist",
     "paths": {
-      "@/*": ["src/*"]
+      "@/domain/*": ["./src/domain/*"],
+      "@/infrastructure/*": ["./src/infrastructure/*"],
+      "@/tests/*": ["./tests/*"],
     },
     "experimentalDecorators": true,
     "esModuleInterop": true

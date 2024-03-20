@@ -1,10 +1,7 @@
-import { ESupportedDatabaseDrivers } from "@/domain/entities/IDatabaseSingletonFactory";
-import { DatabaseSingletonFactory } from "@/infrastructure/database/DatabaseFactory";
+import { chosenDatabase, connectDatabaseHelper } from "@/tests/lib/connectDatabaseHelper";
 import Sequelize, { sql } from "@sequelize/core";
 
-const chosenDatabase = ESupportedDatabaseDrivers.SQLITE;
-
-describe("Should correctly connect to the databases", () => {
+describe("Sequelize", () => {
     describe("Should connect to the chosen database: " + chosenDatabase, () => {
         let database: Sequelize;
 
@@ -41,9 +38,3 @@ describe("Should correctly connect to the databases", () => {
         });
     });
 });
-
-const connectDatabaseHelper = async (driver: ESupportedDatabaseDrivers) => {
-    const databaseFactory = new DatabaseSingletonFactory();
-    const database = await databaseFactory.createDatabase(driver)
-    return await database.connect()
-}
