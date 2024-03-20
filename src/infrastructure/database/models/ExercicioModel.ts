@@ -1,15 +1,23 @@
-import { DataTypes, Model, InferAttributes, InferCreationAttributes, CreationOptional } from '@sequelize/core';
-import { Attribute, PrimaryKey, NotNull } from '@sequelize/core/decorators-legacy';
+import { DataTypes, Model, InferAttributes, InferCreationAttributes, CreationOptional, sql } from '@sequelize/core';
+import { Attribute, PrimaryKey, NotNull, Table, Unique, Default } from '@sequelize/core/decorators-legacy';
 
 import { ExercicioCommand } from '@/domain/entities/IExercicio';
 
+@Table({
+    tableName: 'exercicios',
+    underscored: true,
+    createdAt: 'created_at',
+    updatedAt: 'updated_at',
+})
 export class ExercicioModel extends Model<InferAttributes<ExercicioModel>, InferCreationAttributes<ExercicioModel>> implements ExercicioCommand {
     @Attribute(DataTypes.UUIDV4)
     @PrimaryKey
+    @Default(sql.uuidV4)
     declare id: CreationOptional<string>;
 
     @Attribute(DataTypes.STRING(64))
     @NotNull
+    @Unique
     declare nome: string;
 
     @Attribute(DataTypes.STRING(512))
