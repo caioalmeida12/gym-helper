@@ -7,12 +7,8 @@ describe("ExercicioModel", () => {
     let database: Sequelize;
 
     beforeAll(async () => {
-        database = await connectDatabaseHelper(chosenDatabase).then((res) => {
-            if (!(res instanceof Sequelize)) throw new Error('The database is not an instance of Sequelize')
-
-            return res
-        })
-    });
+        database = await connectDatabaseHelper(chosenDatabase)
+    })
 
     it("Should be able to query the ExercicioModel", async () => {
         const result = (await database.query(sql`SELECT 1 + 1 AS result;`))[0] as { result: number }[];
