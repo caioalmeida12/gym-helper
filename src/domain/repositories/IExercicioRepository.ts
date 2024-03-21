@@ -1,11 +1,11 @@
 import { IExercicioCommand, IExercicioQuery } from "../entities/IExercicio";
 
 interface IExercicioRepository {
-    create(data: IExercicioQuery): Promise<IExercicioCommand>;
-    findById(id: string): Promise<IExercicioQuery | undefined>;
+    create(data: IExercicioCommand): Promise<IExercicioQuery>;
+    findById(id: string): Promise<IExercicioQuery | null>;
     findAll(): Promise<IExercicioQuery[]>;
-    update(id: string, data: IExercicioQuery): Promise<IExercicioCommand>;
-    delete(id: string): Promise<void>;
+    update(id: string, data: IExercicioCommand): Promise<IExercicioQuery | null>;
+    delete(id: string): Promise<number>;
 }
 
 export default IExercicioRepository;

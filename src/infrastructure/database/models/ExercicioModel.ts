@@ -2,7 +2,7 @@ import { DataTypes, Model, InferAttributes, InferCreationAttributes, CreationOpt
 import { Attribute, PrimaryKey, NotNull, Table, Unique, Default } from '@sequelize/core/decorators-legacy';
 import { Len, Min, Max } from '@sequelize/validator.js';
 
-import { IExercicioCommand } from '@/domain/entities/IExercicio';
+import {  IExercicioQuery } from '@/domain/entities/IExercicio';
 
 @Table({
     tableName: 'exercicios',
@@ -10,7 +10,7 @@ import { IExercicioCommand } from '@/domain/entities/IExercicio';
     createdAt: 'created_at',
     updatedAt: 'updated_at',
 })
-export class ExercicioModel extends Model<InferAttributes<ExercicioModel>, InferCreationAttributes<ExercicioModel>> implements IExercicioCommand {
+export class ExercicioModel extends Model<InferAttributes<ExercicioModel>, InferCreationAttributes<ExercicioModel>> implements IExercicioQuery {
     @Attribute(DataTypes.UUIDV4)
     @PrimaryKey
     @Default(sql.uuidV4)
@@ -54,4 +54,7 @@ export class ExercicioModel extends Model<InferAttributes<ExercicioModel>, Infer
     @Attribute(DataTypes.TINYINT(4))
     @NotNull
     declare descanso_recomendado: number;
+
+    declare created_at: CreationOptional<Date>;
+    declare updated_at: CreationOptional<Date>;
 }

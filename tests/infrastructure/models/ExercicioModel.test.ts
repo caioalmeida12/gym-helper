@@ -124,7 +124,7 @@ describe("ExercicioModel", () => {
             nome: 'Supino inclinado'
         })
 
-        expect(updated).toBeUndefined()
+        expect(updated).toBeNull()
     })
 
     it("Should not be able to update an ExercicioModel to a name that already exists", async () => {

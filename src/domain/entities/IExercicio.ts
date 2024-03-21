@@ -1,4 +1,4 @@
-interface ExercicioCommandEntity {
+interface IExercicioCommand {
     nome: string;
     descricao: string;
     unidade_de_execucao: 'CARGA' | 'SEGUNDOS' | 'MINUTOS' | 'REPETICOES' | 'METROS';
@@ -7,12 +7,12 @@ interface ExercicioCommandEntity {
     descanso_recomendado: number;
 }
 
-interface ExercicioQueryEntity extends ExercicioCommandEntity{
+interface IExercicioQuery extends IExercicioCommand {
     id: string;
     created_at: Date;
     updated_at: Date;
     deleted_at?: Date;
 }
 
-export type IExercicioCommand = ExercicioCommandEntity;
-export type IExercicioQuery = ExercicioQueryEntity;
+export type { IExercicioCommand }
+export type { IExercicioQuery }
