@@ -20,9 +20,9 @@ describe("ExercicioModel", () => {
 
     it("Should be able to create a new ExercicioModel", async () => {
         const sut = (await ExercicioModel.create({
-            nome: 'Supino reto',
+            nome: 'Agachamento convencional',
             descanso_recomendado: 60,
-            descricao: 'O supino reto é um exercício que trabalha o peitoral, ombros e tríceps',
+            descricao: 'O agachamento convencional é um exercício que trabalha a parte inferior do corpo completamente',
             dificuldade: 3,
             regime_de_execucao_recomendado: '3x10',
             unidade_de_execucao: 'REPETICOES'
@@ -44,7 +44,7 @@ describe("ExercicioModel", () => {
             // eslint-disable-next-line @typescript-eslint/no-unused-vars
             const sut = await ExercicioModel.create({
                 descanso_recomendado: 60,
-                descricao: 'O supino reto é um exercício que trabalha o peitoral, ombros e tríceps',
+                descricao: 'O agachamento convencional é um exercício que trabalha a parte inferior do corpo completamente',
                 dificuldade: 3,
                 regime_de_execucao_recomendado: '3x10',
                 unidade_de_execucao: 'REPETICOES'
@@ -58,9 +58,9 @@ describe("ExercicioModel", () => {
         try {
             // eslint-disable-next-line @typescript-eslint/no-unused-vars
             const sut = await ExercicioModel.create({
-                nome: 'Supino reto',
+                nome: 'Agachamento convencional',
                 descanso_recomendado: 60,
-                descricao: 'O supino reto é um exercício que trabalha o peitoral, ombros e tríceps',
+                descricao: 'O agachamento convencional é um exercício que trabalha a parte inferior do corpo completamente',
                 dificuldade: 3,
                 regime_de_execucao_recomendado: '3x10',
                 unidade_de_execucao: 'REPETICOES'
@@ -73,7 +73,7 @@ describe("ExercicioModel", () => {
     it("Should be able to find an ExercicioModel", async () => {
         const sut = (await ExercicioModel.findOne({
             where: {
-                nome: 'Supino reto'
+                nome: 'Agachamento convencional'
             }
         }))?.toJSON()
 
@@ -95,7 +95,7 @@ describe("ExercicioModel", () => {
     it("Should be able to update an ExercicioModel", async () => {
         const sut = await ExercicioModel.findOne({
             where: {
-                nome: 'Supino reto'
+                nome: 'Agachamento convencional'
             }
         }) as ExercicioModel
 
@@ -112,7 +112,7 @@ describe("ExercicioModel", () => {
     it("Should not be able to update an ExercicioModel that does not exist", async () => {
         const sut = await ExercicioModel.findOne({
             where: {
-                nome: 'Supino reto'
+                nome: 'Agachamento convencional'
             }
         })
 
@@ -127,9 +127,9 @@ describe("ExercicioModel", () => {
         try {
             // eslint-disable-next-line @typescript-eslint/no-unused-vars
             const base = await ExercicioModel.create({
-                nome: 'Supino reto',
+                nome: 'Agachamento convencional',
                 descanso_recomendado: 60,
-                descricao: 'O supino reto é um exercício que trabalha o peitoral, ombros e tríceps',
+                descricao: 'O agachamento convencional é um exercício que trabalha a parte inferior do corpo completamente',
                 dificuldade: 3,
                 regime_de_execucao_recomendado: '3x10',
                 unidade_de_execucao: 'REPETICOES'
@@ -137,7 +137,7 @@ describe("ExercicioModel", () => {
 
             const sut = await ExercicioModel.findOne({
                 where: {
-                    nome: 'Supino reto'
+                    nome: 'Agachamento convencional'
                 }
             })
 
