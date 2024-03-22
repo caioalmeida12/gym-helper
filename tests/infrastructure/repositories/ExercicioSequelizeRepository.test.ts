@@ -1,25 +1,28 @@
 import { ESupportedDatabaseDrivers } from "@/domain/entities/IDatabaseSingletonFactory";
-import IExercicioRepository from "@/domain/repositories/IExercicioRepository";
-import { ExercicioSequelizeRepository } from "@/infrastructure/repositories/ExercicioSequelizeRepository";
+import { IExercicioCommand, IExercicioQuery } from "@/domain/entities/IExercicio";
+import ISequelizeRepository from "@/domain/repositories/ISequelizeRepository";
+import { ExercicioModel } from "@/infrastructure/database/models/ExercicioModel";
+import { SequelizeRepository } from "@/infrastructure/repositories/SequelizeRepository";
 import { connectDatabaseHelper } from "@/tests/lib/connectDatabaseHelper";
 
 describe("ExercicioSequelizeRepository", () => {
-    let repository: IExercicioRepository;
+    let repository: ISequelizeRepository<IExercicioCommand, IExercicioQuery>;
 
     beforeAll(async () => {
         await connectDatabaseHelper(ESupportedDatabaseDrivers.SQLITE)
 
-        repository = new ExercicioSequelizeRepository()
+        repository = new SequelizeRepository<IExercicioCommand, IExercicioQuery>(ExercicioModel)
     });
 
-    it("Should return an empty list of exercises", async () => {
+
+    it("Should return an empty list of Exercicios", async () => {
         const sut = await repository.findAll();
 
         expect(sut).toBeDefined();
         expect(sut).toHaveLength(0);
     });
 
-    it("Should be able to create a new exercise", async () => {
+    it("Should be able to create a new Exercicio", async () => {
         const sut = await repository.create({
             nome: 'Supino reto',
             descanso_recomendado: 60,
@@ -41,7 +44,7 @@ describe("ExercicioSequelizeRepository", () => {
         expect(sut).toHaveProperty('updated_at')
     });
 
-    it("Should return a list of exercises with at least one entry", async () => {
+    it("Should return a list of Exercicios with at least one entry", async () => {
         const sut = await repository.findAll();
 
         expect(sut).toBeDefined()
@@ -58,7 +61,7 @@ describe("ExercicioSequelizeRepository", () => {
         expect(sut[0]).toHaveProperty('updated_at')
     });
 
-    it("Should be able to find an exercise by its id", async () => {
+    it("Should be able to find an Exercicio by its id", async () => {
         const sut = await repository.findAll();
 
         const found = await repository.findById(sut[0].id);
@@ -75,7 +78,7 @@ describe("ExercicioSequelizeRepository", () => {
         expect(found).toHaveProperty('updated_at')
     });
 
-    it("Should be able to update an exercise", async () => {
+    it("Should be able to update an Exercicio", async () => {
         const sut = await repository.findAll();
 
         const updated = await repository.update(sut[0].id, {
@@ -95,7 +98,7 @@ describe("ExercicioSequelizeRepository", () => {
         expect(updated).toHaveProperty('updated_at')
     });
 
-    it("Should not be able to update an exercise that does not exist", async () => {
+    it("Should not be able to update an Exercicio that does not exist", async () => {
         const updated = await repository.update("57336908-1472-4077-a9ad-241c710f5db9", {
             nome: 'Supino inclinado',
             descanso_recomendado: 60,
@@ -108,7 +111,7 @@ describe("ExercicioSequelizeRepository", () => {
         expect(updated).toBeNull()
     });
 
-    it("Should be able to delete an exercise", async () => {
+    it("Should be able to delete an Exercicio", async () => {
         const sut = await repository.findAll();
 
         const deleted = await repository.delete(sut[0].id);
@@ -116,13 +119,13 @@ describe("ExercicioSequelizeRepository", () => {
         expect(deleted).toBe(1)
     });
 
-    it("Should return null when finding an exercise by a non-existing id", async () => {
+    it("Should return null when finding an Exercicio by a non-existing id", async () => {
         const found = await repository.findById("57336908-1472-4077-a9ad-241c710f5db9");
     
         expect(found).toBeNull();
     });
     
-    it("Should return null when updating an exercise with a non-existing id", async () => {
+    it("Should return null when updating an Exercicio with a non-existing id", async () => {
         const updated = await repository.update("57336908-1472-4077-a9ad-241c710f5db9", {
             nome: 'Supino inclinado',
             descanso_recomendado: 60,
@@ -135,13 +138,13 @@ describe("ExercicioSequelizeRepository", () => {
         expect(updated).toBeNull();
     });
     
-    it("Should return 0 when deleting an exercise with a non-existing id", async () => {
+    it("Should return 0 when deleting an Exercicio with a non-existing id", async () => {
         const deleted = await repository.delete("57336908-1472-4077-a9ad-241c710f5db9");
     
         expect(deleted).toBe(0);
     });
     
-    it("Should return a list of exercises with a specific property value", async () => {
+    it("Should return a list of Exercicios with a specific property value", async () => {
         // eslint-disable-next-line @typescript-eslint/no-unused-vars
         const base = await repository.create({
             nome: 'Supino reto',
@@ -154,13 +157,13 @@ describe("ExercicioSequelizeRepository", () => {
 
         const sut = await repository.findAll();
     
-        const filteredExercises = sut.filter(exercise => exercise.dificuldade === 3);
+        const filteredExercicios = sut.filter(exercise => exercise.dificuldade === 3);
 
         // eslint-disable-next-line @typescript-eslint/no-unused-vars
         const deleted = await repository.delete(sut[0].id);
     
-        expect(filteredExercises).toBeDefined();
-        expect(filteredExercises.length).toBeGreaterThan(0);
-        expect(filteredExercises.every(exercise => exercise.dificuldade === 3)).toBe(true);
+        expect(filteredExercicios).toBeDefined();
+        expect(filteredExercicios.length).toBeGreaterThan(0);
+        expect(filteredExercicios.every(exercise => exercise.dificuldade === 3)).toBe(true);
     });    
 });
