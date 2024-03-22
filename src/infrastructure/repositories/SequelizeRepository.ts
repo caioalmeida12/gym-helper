@@ -1,3 +1,4 @@
+/* eslint-disable  @typescript-eslint/no-explicit-any */
 import { Model, ModelStatic, CreationAttributes } from "@sequelize/core";
 import ISequelizeRepository from "@/domain/repositories/ISequelizeRepository";
 
