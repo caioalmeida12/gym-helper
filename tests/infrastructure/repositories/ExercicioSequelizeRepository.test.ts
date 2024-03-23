@@ -1,4 +1,4 @@
-import { ESupportedDatabaseDrivers } from "@/domain/entities/IDatabaseSingletonFactory";
+import { ESupportedDatabaseDrivers } from "@/domain/database/IDatabaseSingletonFactory";
 import { IExercicioCommand, IExercicioQuery } from "@/domain/entities/IExercicio";
 import ISequelizeRepository from "@/domain/repositories/ISequelizeRepository";
 import { ExercicioModel } from "@/infrastructure/database/models/ExercicioModel";

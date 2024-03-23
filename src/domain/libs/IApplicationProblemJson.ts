@@ -1,4 +1,4 @@
-import { HTTP_STATUS_CODE_NUMBERS } from "@/domain/entities/THTTPStatusCodeNumbers";
+import { HTTP_STATUS_CODE_NUMBERS } from "@/domain/libs/THTTPStatusCodeNumbers";
 
 export interface IApplicationProblemJson {
     type: string;

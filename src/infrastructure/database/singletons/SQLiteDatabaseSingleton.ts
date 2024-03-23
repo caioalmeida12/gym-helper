@@ -1,6 +1,6 @@
-import { IDatabaseSingleton } from "@/domain/entities/IDatabaseSingleton";
+import { IDatabaseSingleton } from "@/domain/database/IDatabaseSingleton";
 import { Sequelize } from '@sequelize/core';
-import { IDatabase } from "@/domain/entities/IDatabase";
+import { IDatabase } from "@/domain/database/IDatabase";
 
 import { AllModelsArray } from "../models";
 
