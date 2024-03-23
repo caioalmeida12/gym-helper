@@ -1,4 +1,4 @@
-import { ESupportedDatabaseDrivers } from "@/domain/entities/IDatabaseSingletonFactory";
+import { ESupportedDatabaseDrivers } from "@/domain/database/IDatabaseSingletonFactory";
 import { DatabaseSingletonFactory } from "@/infrastructure/database/DatabaseFactory"
 import Sequelize from "@sequelize/core";
 

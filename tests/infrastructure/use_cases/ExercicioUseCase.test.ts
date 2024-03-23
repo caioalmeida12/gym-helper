@@ -5,7 +5,7 @@ import { SequelizeRepository } from "@/infrastructure/repositories/SequelizeRepo
 import { ExercicioModel } from "@/infrastructure/database/models/ExercicioModel";
 import { ApplicationProblemJsonError } from "@/infrastructure/libs/ApplicationProblemJson";
 import { connectDatabaseHelper } from "@/tests/lib/connectDatabaseHelper";
-import { ESupportedDatabaseDrivers } from "@/domain/entities/IDatabaseSingletonFactory";
+import { ESupportedDatabaseDrivers } from "@/domain/database/IDatabaseSingletonFactory";
 import Sequelize from "@sequelize/core";
 
 describe("ExercicioUseCase", () => {
@@ -75,7 +75,7 @@ describe("ExercicioUseCase", () => {
             regime_de_execucao_recomendado: "3x10",
             unidade_de_execucao: "REPETICOES"
         });
-        
+
         const sut = await useCase.findById(base.id);
 
         expect(sut).toBeInstanceOf(Object);

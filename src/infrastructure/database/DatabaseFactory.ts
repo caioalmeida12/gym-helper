@@ -1,5 +1,5 @@
-import { IDatabase } from "@/domain/entities/IDatabase"
-import { IDatabaseSingletonFactory, ESupportedDatabaseDrivers } from "@/domain/entities/IDatabaseSingletonFactory"
+import { IDatabase } from "@/domain/database/IDatabase"
+import { IDatabaseSingletonFactory, ESupportedDatabaseDrivers } from "@/domain/database/IDatabaseSingletonFactory"
 import { SQLiteDatabaseSingleton } from "./singletons/SQLiteDatabaseSingleton"
 
 class DatabaseSingletonFactory implements IDatabaseSingletonFactory {

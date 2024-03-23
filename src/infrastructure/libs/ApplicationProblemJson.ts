@@ -1,5 +1,5 @@
-import { IApplicationProblemJson } from "../../domain/entities/IApplicationProblemJson";
-import { HTTP_STATUS_CODE_NUMBERS } from "../../domain/entities/THTTPStatusCodeNumbers";
+import { IApplicationProblemJson } from "../../domain/libs/IApplicationProblemJson";
+import { HTTP_STATUS_CODE_NUMBERS } from "../../domain/libs/THTTPStatusCodeNumbers";
 
 export class ApplicationProblemJsonError implements IApplicationProblemJson {
     [key: string]: unknown;
