@@ -1,6 +1,6 @@
 import { IExercicioQuery } from '@/domain/entities/IExercicio';
 import z from 'zod';
-import { DidCorrectlyImplementDTO } from '../lib/DidCorreclyImplementDTOHelper';
+import { DidCorrectlyImplementDTO } from '../libs/DidCorreclyImplementDTOHelper';
 
 const ExercicioZodDTO = z.object({
     id: z.preprocess(

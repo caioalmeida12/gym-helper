@@ -1,7 +1,7 @@
 import { IExercicioCommand, IExercicioQuery } from "@/domain/entities/IExercicio";
 import ISequelizeRepository from "@/domain/repositories/ISequelizeRepository";
 import IUseCase from "@/domain/use_cases/IExercicioUseCase";
-import { ApplicationProblemJsonError } from "../lib/ApplicationProblemJson";
+import { ApplicationProblemJsonError } from "../libs/ApplicationProblemJson";
 
 export class ExercicioUseCase implements IUseCase<IExercicioCommand, IExercicioQuery> {
   constructor(private repository: ISequelizeRepository<IExercicioCommand, IExercicioQuery>) { }
@@ -17,9 +17,10 @@ export class ExercicioUseCase implements IUseCase<IExercicioCommand, IExercicioQ
       throw new ApplicationProblemJsonError({
         type: "https://httpstatuses.com/404",
         title: "Not Found",
-        detail: "Exercicio not found",
-        instance: "https://httpstatuses.com/404"
-      }, 404);
+        detail: "Exercicio could not be found when searching by id",
+        instance: "/exercicio/:id",
+        status: 404
+      });
     }
 
     return result;
@@ -29,11 +30,23 @@ export class ExercicioUseCase implements IUseCase<IExercicioCommand, IExercicioQ
     return await this.repository.create(data);
   }
 
-  update(id: string, data: IExercicioCommand): Promise<IExercicioQuery> {
-    throw new Error("Method not implemented.");
+  async update(id: string, data: IExercicioCommand): Promise<IExercicioQuery> {
+    const result = await this.repository.update(id, data);
+
+    if (!result) {
+      throw new ApplicationProblemJsonError({
+        type: "https://httpstatuses.com/404",
+        title: "Not Found",
+        detail: "Exercicio could not be found when updating",
+        instance: "/exercicio/:id",
+        status: 404
+      });
+    }
+
+    return result;
   }
 
-  delete(id: string): Promise<number> {
-    throw new Error("Method not implemented.");
+  async delete(id: string): Promise<number> {
+    return this.repository.delete(id);
   }
 }
