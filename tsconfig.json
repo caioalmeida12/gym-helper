@@ -16,6 +16,7 @@
     "paths": {
       "@/domain/*": ["./src/domain/*"],
       "@/infrastructure/*": ["./src/infrastructure/*"],
+      "@/presentation/*": ["./src/presentation/*"],
       "@/tests/*": ["./tests/*"],
     },
     "experimentalDecorators": true,

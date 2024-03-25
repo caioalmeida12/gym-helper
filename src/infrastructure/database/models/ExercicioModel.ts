@@ -55,6 +55,6 @@ export class ExercicioModel extends Model<InferAttributes<ExercicioModel>, Infer
     @NotNull
     declare descanso_recomendado: number;
 
-    declare created_at: CreationOptional<Date>;
-    declare updated_at: CreationOptional<Date>;
+    declare created_at: CreationOptional<string>;
+    declare updated_at: CreationOptional<string>;
 }
