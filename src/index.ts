@@ -29,6 +29,10 @@ async (c, next) => {
   return await GetExerciciosHonoController.findById(exerciciosRepository, c, next)
 })
 
+app.get("/health", async (c) => {
+  return c.json({ status: "ok" })
+})
+
 const port = 3000
 console.log(`Server is running on port ${port}`)
 
