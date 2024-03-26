@@ -9,11 +9,9 @@ import { DatabaseSingletonFactory } from './infrastructure/database/DatabaseFact
 import { ESupportedDatabaseDrivers } from './domain/database/IDatabaseSingletonFactory'
 import { EmptyDataFieldMiddleware } from './infrastructure/middlewares/EmptyDataFieldMiddleware'
 import { ApplicationProblemJsonMiddleware } from './infrastructure/middlewares/ApplicationProblemJsonMiddleware'
-import { prettyJSON } from 'hono/pretty-json'
 
 const app = new Hono()
 
-app.use(prettyJSON())
 app.use(logger());
 app.use(ApplicationProblemJsonMiddleware)
 app.use(EmptyDataFieldMiddleware)

@@ -3,11 +3,11 @@ import { HTTP_STATUS_CODE_NUMBERS } from "../../domain/libs/THTTPStatusCodeNumbe
 
 export class ApplicationProblemJsonError implements IApplicationProblemJson {
     [key: string]: unknown;
-    declare type: string;
-    declare title: string;
+    declare type?: string;
+    declare title?: string;
     declare status: HTTP_STATUS_CODE_NUMBERS;
     declare detail: string;
-    declare instance: string;
+    declare instance?: string;
 
     constructor(data: IApplicationProblemJson) {
         Object.keys(data).forEach((key: string) => {

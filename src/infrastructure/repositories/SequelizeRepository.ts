@@ -6,15 +6,15 @@ export class SequelizeRepository<Command, Query> implements ISequelizeRepository
     constructor(private model: ModelStatic<Model<any, any>>) {}
 
     async create(data: Command): Promise<Query> {
-        return await this.model.create(data as CreationAttributes<Model<any, any>>) as Query;
+        return (await this.model.create(data as CreationAttributes<Model<any, any>>)).get()
     }
 
     async findById(id: string): Promise<Query | null> {
-        return await this.model.findByPk(id) as Query | null;
+        return (await this.model.findByPk(id))?.get()
     }
 
     async findAll(): Promise<Query[]> {
-        return await this.model.findAll() as Query[];
+        return (await this.model.findAll()).map((item) => item.get())
     }
 
     async update(id: string, data: Command): Promise<Query | null> {

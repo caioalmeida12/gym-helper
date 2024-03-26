@@ -2,6 +2,7 @@ import { IExercicioCommand, IExercicioQuery } from "@/domain/entities/IExercicio
 import ISequelizeRepository from "@/domain/repositories/ISequelizeRepository";
 import IUseCase from "@/domain/use_cases/IExercicioUseCase";
 import { ApplicationProblemJsonError } from "../libs/ApplicationProblemJson";
+import ExercicioZodDTO from "../dtos/ExercicioZodDTO";
 
 export class ExercicioUseCase implements IUseCase<IExercicioCommand, IExercicioQuery> {
   constructor(private repository: ISequelizeRepository<IExercicioCommand, IExercicioQuery>) { }
@@ -11,14 +12,13 @@ export class ExercicioUseCase implements IUseCase<IExercicioCommand, IExercicioQ
   }
 
   async findById(id: string): Promise<IExercicioQuery> {
+    ExercicioZodDTO.pick({ id: true }).parse({ id });
+
     const result = await this.repository.findById(id);
 
     if (!result) {
       throw new ApplicationProblemJsonError({
-        type: "https://httpstatuses.com/404",
-        title: "Not Found",
-        detail: "Exercicio could not be found when searching by id",
-        instance: "/exercicio/:id",
+        detail: "Exercício não encontrado na busca por id",
         status: 404
       });
     }
@@ -35,10 +35,7 @@ export class ExercicioUseCase implements IUseCase<IExercicioCommand, IExercicioQ
 
     if (!result) {
       throw new ApplicationProblemJsonError({
-        type: "https://httpstatuses.com/404",
-        title: "Not Found",
         detail: "Exercicio could not be found when updating",
-        instance: "/exercicio/:id",
         status: 404
       });
     }
