@@ -24,6 +24,7 @@ jobs:
     - run: npm install -g pnpm
     - run: pnpm add -D wait-on
     - run: pnpm install
-    - run: pnpm run dev
+    - run: pnpm tsc
+    - run: node dist/src/index.js &
     - run: npx wait-on -t 15000 http://localhost:3000/health
     - run: pnpm test
