@@ -4,16 +4,17 @@ import ISequelizeRepository from "@/domain/repositories/ISequelizeRepository";
 import { ExercicioModel } from "@/infrastructure/database/models/ExercicioModel";
 import { SequelizeRepository } from "@/infrastructure/repositories/SequelizeRepository";
 import { connectDatabaseHelper } from "@/tests/lib/connectDatabaseHelper";
+import Sequelize from "@sequelize/core";
 
 describe("ExercicioSequelizeRepository", () => {
+    let database: Sequelize;
     let repository: ISequelizeRepository<IExercicioCommand, IExercicioQuery>;
 
     beforeAll(async () => {
-        await connectDatabaseHelper(ESupportedDatabaseDrivers.SQLITE)
+        database = await connectDatabaseHelper(ESupportedDatabaseDrivers.SQLITE) as Sequelize
 
         repository = new SequelizeRepository<IExercicioCommand, IExercicioQuery>(ExercicioModel)
     });
-
 
     it("Should return an empty list of Exercicios", async () => {
         const sut = await repository.findAll();
@@ -63,6 +64,8 @@ describe("ExercicioSequelizeRepository", () => {
 
     it("Should be able to find an Exercicio by its id", async () => {
         const sut = await repository.findAll();
+
+        expect(sut).toBeDefined()
 
         const found = await repository.findById(sut[0].id);
 
@@ -166,4 +169,8 @@ describe("ExercicioSequelizeRepository", () => {
         expect(filteredExercicios.length).toBeGreaterThan(0);
         expect(filteredExercicios.every(exercise => exercise.dificuldade === 3)).toBe(true);
     });    
+
+    afterAll(async () => {
+        await database.close();
+    });
 });

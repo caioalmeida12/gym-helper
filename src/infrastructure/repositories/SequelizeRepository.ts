@@ -10,7 +10,7 @@ export class SequelizeRepository<Command, Query> implements ISequelizeRepository
     }
 
     async findById(id: string): Promise<Query | null> {
-        return (await this.model.findByPk(id))?.get()
+        return (await this.model.findByPk(id))?.get() ?? null
     }
 
     async findAll(): Promise<Query[]> {

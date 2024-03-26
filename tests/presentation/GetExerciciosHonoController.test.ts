@@ -8,12 +8,13 @@ const API_URL = "http://localhost:3000"
 
 describe("GetExerciciosHonoController", () => {
     let exercicio: ExercicioModel;
+    let database: Sequelize;
 
     beforeAll(async () => {
-        await connectDatabaseHelper(ESupportedDatabaseDrivers.SQLITE)
+        database = await connectDatabaseHelper(ESupportedDatabaseDrivers.SQLITE) as Sequelize
     });
 
-    it("Should return 400 on empty response data", async () => {
+    it("Should return 404 on empty response data", async () => {
         await request(API_URL)
             .get("/exercicios")
             .expect(404)
@@ -63,5 +64,9 @@ describe("GetExerciciosHonoController", () => {
                 expect(res.body).toHaveProperty("status", "success")
                 expect(res.body).toHaveProperty("data")
             })
+    })
+
+    afterAll(async () => {
+        await database.close()
     })
 })

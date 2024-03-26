@@ -1,12 +1,13 @@
-import { chosenDatabase, connectDatabaseHelper } from "@/tests/lib/connectDatabaseHelper";
+import { ESupportedDatabaseDrivers } from "@/domain/database/IDatabaseSingletonFactory";
+import { connectDatabaseHelper } from "@/tests/lib/connectDatabaseHelper";
 import Sequelize, { sql } from "@sequelize/core";
 
-describe("Sequelize", () => {
-    describe("Should connect to the chosen database: " + chosenDatabase, () => {
+describe("SQLiteSequelize", () => {
+    describe("Should connect to the chosen database: " + ESupportedDatabaseDrivers.SQLITE, () => {
         let database: Sequelize;
 
         beforeAll(async () => {
-            database = await connectDatabaseHelper(chosenDatabase).then((res) => {
+            database = await connectDatabaseHelper(ESupportedDatabaseDrivers.SQLITE).then((res) => {
                 if(!(res instanceof Sequelize)) throw new Error('The database is not an instance of Sequelize')
 
                 return res 
@@ -15,7 +16,7 @@ describe("Sequelize", () => {
 
         it("Should connect to the chosen database", async () => {
             expect(database).toBeInstanceOf(Sequelize);
-            expect(database.dialect.name).toBe(chosenDatabase);
+            expect(database.dialect.name).toBe(ESupportedDatabaseDrivers.SQLITE);
         });
 
         it("Should load the models correctly", async () => {
@@ -32,9 +33,5 @@ describe("Sequelize", () => {
             expect(result[0]).toHaveProperty('result');
             expect(result[0].result).toBe(2);
         })
-
-        afterAll(async () => {
-            await database.close();
-        });
     });
 });

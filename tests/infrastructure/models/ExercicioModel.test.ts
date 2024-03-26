@@ -7,7 +7,7 @@ describe("ExercicioModel", () => {
     let database: Sequelize;
 
     beforeAll(async () => {
-        database = await connectDatabaseHelper(chosenDatabase)
+        database = await connectDatabaseHelper(chosenDatabase) as Sequelize;
     })
 
     it("Should be able to query the ExercicioModel", async () => {

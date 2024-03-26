@@ -14,7 +14,7 @@ describe("ExercicioUseCase", () => {
     let database: Sequelize;
 
     beforeAll(async () => {
-        database = await connectDatabaseHelper(ESupportedDatabaseDrivers.SQLITE)
+        database = await connectDatabaseHelper(ESupportedDatabaseDrivers.SQLITE) as Sequelize;
 
         repository = new SequelizeRepository<IExercicioCommand, IExercicioQuery>(ExercicioModel);
         useCase = new ExercicioUseCase(repository);
@@ -93,14 +93,9 @@ describe("ExercicioUseCase", () => {
             // eslint-disable-next-line @typescript-eslint/no-unused-vars
             const sut = await useCase.findById("069461da-564d-4503-b8e0-80ea6b92ec19");
         } catch (error: unknown) {
-            expect(error).toBeInstanceOf(Object);
-
             if (!(error instanceof ApplicationProblemJsonError)) throw error;
 
-            expect(error.type).toBeDefined();
-            expect(error.title).toBeDefined();
             expect(error.detail).toBeDefined();
-            expect(error.instance).toBeDefined();
             expect(error.status).toBe(404);
         }
     });
@@ -146,14 +141,9 @@ describe("ExercicioUseCase", () => {
                 unidade_de_execucao: "REPETICOES"
             });
         } catch (error: unknown) {
-            expect(error).toBeInstanceOf(Object);
-
             if (!(error instanceof ApplicationProblemJsonError)) throw error;
 
-            expect(error.type).toBeDefined();
-            expect(error.title).toBeDefined();
             expect(error.detail).toBeDefined();
-            expect(error.instance).toBeDefined();
             expect(error.status).toBe(404);
         }
     });

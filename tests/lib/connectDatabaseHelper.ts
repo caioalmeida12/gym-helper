@@ -1,14 +1,13 @@
 import { ESupportedDatabaseDrivers } from "@/domain/database/IDatabaseSingletonFactory";
 import { DatabaseSingletonFactory } from "@/infrastructure/database/DatabaseFactory"
-import Sequelize from "@sequelize/core";
 
-const chosenDatabase = ESupportedDatabaseDrivers.SQLITE;
+const chosenDatabase = ESupportedDatabaseDrivers.POSTGRES;
 
 const connectDatabaseHelper = async (driver: ESupportedDatabaseDrivers) => {
     const databaseFactory = new DatabaseSingletonFactory();
     const database = await databaseFactory.createDatabase(driver)
     return await database.connect().then((res) => {
-        if (!(res instanceof Sequelize)) throw new Error('The database is not an instance of Sequelize')
+        console.log(`Connected to the database: ${driver}`)
 
         return res
     })
