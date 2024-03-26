@@ -6,6 +6,7 @@ import IExercicioRepository from "@/domain/repositories/IExercicioRepository";
 import { BlankInput } from "hono/types";
 
 export class GetExerciciosHonoController {
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     static async findAll(repository: IExercicioRepository, c: Context<Env, "/exercicio", BlankInput>, next: Next) {
         const useCase = new ExercicioUseCase(repository);
 
@@ -19,6 +20,7 @@ export class GetExerciciosHonoController {
         return c.json(response);
     }
 
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     static async findById(repository: IExercicioRepository, c: Context<Env, "/exercicio/:id", BlankInput>, next: Next) {
         const useCase = new ExercicioUseCase(repository);
 

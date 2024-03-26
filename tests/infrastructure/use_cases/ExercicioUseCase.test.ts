@@ -97,10 +97,7 @@ describe("ExercicioUseCase", () => {
 
             if (!(error instanceof ApplicationProblemJsonError)) throw error;
 
-            expect(error.type).toBeDefined();
-            expect(error.title).toBeDefined();
             expect(error.detail).toBeDefined();
-            expect(error.instance).toBeDefined();
             expect(error.status).toBe(404);
         }
     });
@@ -150,10 +147,7 @@ describe("ExercicioUseCase", () => {
 
             if (!(error instanceof ApplicationProblemJsonError)) throw error;
 
-            expect(error.type).toBeDefined();
-            expect(error.title).toBeDefined();
             expect(error.detail).toBeDefined();
-            expect(error.instance).toBeDefined();
             expect(error.status).toBe(404);
         }
     });

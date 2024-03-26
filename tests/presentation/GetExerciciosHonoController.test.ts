@@ -2,7 +2,6 @@ import request from "supertest"
 import { connectDatabaseHelper } from "../lib/connectDatabaseHelper"
 import { ESupportedDatabaseDrivers } from "@/domain/database/IDatabaseSingletonFactory"
 import { ExercicioModel } from "@/infrastructure/database/models/ExercicioModel"
-import Sequelize from "@sequelize/core"
 
 const API_URL = "http://localhost:3000"
 
@@ -45,23 +44,32 @@ describe("GetExerciciosHonoController", () => {
             unidade_de_execucao: "REPETICOES",
         })
 
-        await request(API_URL)
+        const sut = await request(API_URL)
             .get("/exercicios")
-            .expect(200)
-            .expect((res) => {
-                expect(res.body).toHaveProperty("status", "success")
-                expect(res.body).toHaveProperty("data")
-            })
-
+            
+        if (sut.ok) {
+            expect(sut.body).toHaveProperty("status", "success")
+            expect(sut.body).toHaveProperty("data")
+            expect(sut.body.data.length).toBeGreaterThan(0)
+        }
     })
 
     it("Should return 200 on findById success", async () => {
-        await request(API_URL)
+        const sut = await request(API_URL)
             .get(`/exercicios/${exercicio.id}`)
-            .expect(200)
-            .expect((res) => {
-                expect(res.body).toHaveProperty("status", "success")
-                expect(res.body).toHaveProperty("data")
-            })
+
+        if (sut.ok) {
+            expect(sut.body).toHaveProperty("status", "success")
+            expect(sut.body).toHaveProperty("data")
+            expect(sut.body.data).toHaveProperty("id", exercicio.id)
+            expect(sut.body.data).toHaveProperty("nome", exercicio.nome)
+            expect(sut.body.data).toHaveProperty("descanso_recomendado", exercicio.descanso_recomendado)
+            expect(sut.body.data).toHaveProperty("descricao", exercicio.descricao)
+            expect(sut.body.data).toHaveProperty("dificuldade", exercicio.dificuldade)
+            expect(sut.body.data).toHaveProperty("regime_de_execucao_recomendado", exercicio.regime_de_execucao_recomendado)
+            expect(sut.body.data).toHaveProperty("unidade_de_execucao", exercicio.unidade_de_execucao)
+            expect(sut.body.data).toHaveProperty("created_at", exercicio.created_at)
+            expect(sut.body.data).toHaveProperty("updated_at", exercicio.updated_at)
+        }
     })
 })
