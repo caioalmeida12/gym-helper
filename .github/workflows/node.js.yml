@@ -29,10 +29,8 @@ jobs:
         restore-keys: |
           ${{ runner.os }}-pnpm-
     - run: npm install -g pnpm
-    - run: pnpm i
     - run: pnpm add -D wait-on
-    - name: Start application
-      run: pnpm dev
-    - name: Wait for /health endpoint
-      run: npx wait-on -t 15000 http://localhost:3000/health
+    - run: pnpm i
+    - run: npm dev
+    - run: npx wait-on -t 15000 http://localhost:3000/health
     - run: pnpm test
