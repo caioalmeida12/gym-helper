@@ -31,10 +31,9 @@ jobs:
           ${{ runner.os }}-pnpm-
     - run: npm install -g pnpm
     - run: pnpm install --frozen-lockfile
-    - name: Run development server
-      run: pnpm dev
-      continue-on-error: true
-    - name: Print logs if failure
-      if: ${{ failure() }}
-      run: cat /path/to/your/log/file
-    - run: pnpm test
+    - name: install wait-on
+      run: npm install -g wait-on
+    - name: Run development server and wait for it to be ready
+      run: pnpm dev & wait-on http://localhost:3000
+    - name: Run tests
+      run: pnpm test
