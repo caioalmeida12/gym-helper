@@ -34,6 +34,6 @@ jobs:
     - name: install wait-on
       run: npm install -g wait-on
     - name: Run development server and wait for it to be ready
-      run: pnpm dev & wait-on http://localhost:3000/healtg
+      run: pnpm tsx watch --import src/index.ts & wait-on http://localhost:3000/health
     - name: Run tests
       run: pnpm test
