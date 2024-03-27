@@ -14,6 +14,7 @@ jobs:
     strategy:
       matrix:
         node-version: [16.x, 18.x, 20.x]
+        # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
 
     steps:
     - uses: actions/checkout@v3
@@ -21,10 +22,14 @@ jobs:
       uses: actions/setup-node@v3
       with:
         node-version: ${{ matrix.node-version }}
+    - name: Cache .pnpm-store
+      uses: actions/cache@v3
+      with:
+        path: ~/.pnpm-store
+        key: ${{ runner.os }}-pnpm-${{ hashFiles('**/pnpm-lock.yaml') }}
+        restore-keys: |
+          ${{ runner.os }}-pnpm-
     - run: npm install -g pnpm
-    - run: pnpm add -D wait-on
-    - run: pnpm install
-    - run: pnpm tsc
-    - run: node dist/src/index.js &
-    - run: npx wait-on -t 15000 http://localhost:3000/health
+    - run: pnpm install --frozen-lockfile
+    - run: pnpm dev
     - run: pnpm test
