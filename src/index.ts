@@ -9,8 +9,11 @@ import { DatabaseSingletonFactory } from './infrastructure/database/DatabaseFact
 import { ESupportedDatabaseDrivers } from './domain/database/IDatabaseSingletonFactory'
 import { EmptyDataFieldMiddleware } from './infrastructure/middlewares/EmptyDataFieldMiddleware'
 import { ApplicationProblemJsonMiddleware } from './infrastructure/middlewares/ApplicationProblemJsonMiddleware'
+import { envLogger } from './infrastructure/libs/EnvFile'
 
 const app = new Hono()
+
+envLogger('.env')
 
 app.use(logger());
 app.use(ApplicationProblemJsonMiddleware)
@@ -25,9 +28,9 @@ app.get("/exercicios", async (c, next) => {
 })
 
 app.get("/exercicios/:id",
-async (c, next) => {
-  return await GetExerciciosHonoController.findById(exerciciosRepository, c, next)
-})
+  async (c, next) => {
+    return await GetExerciciosHonoController.findById(exerciciosRepository, c, next)
+  })
 
 app.get("/health", async (c) => {
   return c.json({ status: "ok" })

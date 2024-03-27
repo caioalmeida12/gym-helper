@@ -6,7 +6,6 @@ import { GetTypeAndTitleFromStatus } from "../libs/GetTypeAndTitleFromStatus";
 export const ApplicationProblemJsonMiddleware = async (c: Context, next: Next) => {
     try {
         await next();
-        console.log(c.res)
     } catch (error) {
         if (!(error instanceof ApplicationProblemJsonError)) throw error;
 
