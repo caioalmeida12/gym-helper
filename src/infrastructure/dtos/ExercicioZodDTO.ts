@@ -21,7 +21,7 @@ const ExercicioZodDTO = z.object({
     ),
     dificuldade: z.preprocess(
         (val) => Number(val),
-        z.number().int().min(0).max(1),
+        z.number().int().min(0).max(10),
     ),
     regime_de_execucao_recomendado: z.preprocess(
         (val) => String(val),
@@ -34,15 +34,15 @@ const ExercicioZodDTO = z.object({
     created_at: z.preprocess(
         (val) => new Date(String(val)),
         z.date(),
-    ),
+    ).optional(),
     updated_at: z.preprocess(
         (val) => new Date(String(val)),
         z.date(),
-    ),
+    ).optional(),
     deleted_at: z.preprocess(
         (val) => val ? new Date(String(val)) : val,
         z.date().nullable(),
-    ),
+    ).optional(),
 });
 
 type ExercicioZodCommand = z.infer<typeof ExercicioZodDTO>;
