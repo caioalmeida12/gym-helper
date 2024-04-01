@@ -13,8 +13,6 @@ describe("PostExerciciosHonoController", () => {
     });
 
     it("Should return 400 on empty request body", async () => {
-        console.log(`${process.env.API_URL}${process.env.ROUTE_EXERCICIOS}`)
-
         await request(`${process.env.API_URL}`)
             .post(`${process.env.ROUTE_EXERCICIOS}`)
             .send({})

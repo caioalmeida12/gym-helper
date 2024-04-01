@@ -2,8 +2,11 @@ import request from "supertest"
 import { connectDatabaseHelper } from "../lib/connectDatabaseHelper"
 import { ESupportedDatabaseDrivers } from "@/domain/database/IDatabaseSingletonFactory"
 import { ExercicioModel } from "@/infrastructure/database/models/ExercicioModel"
+import { envLogger } from "@/infrastructure/libs/EnvFile"
 
-const API_URL = "http://localhost:3000"
+envLogger('.env', {
+    logging: false
+})
 
 describe("GetExerciciosHonoController", () => {
     let exercicio: ExercicioModel;
@@ -13,7 +16,7 @@ describe("GetExerciciosHonoController", () => {
     });
 
     it("Should return 400 on empty response data", async () => {
-        await request(API_URL)
+        await request(`${process.env.API_URL}`)
             .get("/exercicios")
             .expect(404)
             .expect((res) => {
@@ -24,7 +27,7 @@ describe("GetExerciciosHonoController", () => {
     })
 
     it("Should return 404 on not found at findById", async () => {
-        await request(API_URL)
+        await request(`${process.env.API_URL}`)
             .get("/exercicios/4376fe9b-63c8-40a3-809e-3c7990ff0b01")
             .expect(404)
             .expect((res) => {
@@ -44,7 +47,7 @@ describe("GetExerciciosHonoController", () => {
             unidade_de_execucao: "REPETICOES",
         })
 
-        const sut = await request(API_URL)
+        const sut = await request(`${process.env.API_URL}`)
             .get("/exercicios")
             
         if (sut.ok) {
@@ -55,7 +58,7 @@ describe("GetExerciciosHonoController", () => {
     })
 
     it("Should return 200 on findById success", async () => {
-        const sut = await request(API_URL)
+        const sut = await request(`${process.env.API_URL}`)
             .get(`/exercicios/${exercicio.id}`)
 
         if (sut.ok) {

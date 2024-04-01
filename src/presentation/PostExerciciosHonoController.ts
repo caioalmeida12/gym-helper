@@ -10,9 +10,9 @@ export class PostExerciciosHonoController {
     static async create(repository: IExercicioRepository, c: Context, next: Next) {
         const useCase = new ExercicioUseCase(repository);
 
-        const json = ExercicioZodDTO.parse(c.req.json());
+        const parsed = ExercicioZodDTO.omit({ id: true }).parse(await c.req.json());
 
-        const data = await useCase.create(json);
+        const data = await useCase.create(parsed);
 
         const response: JSendSpec<IExercicioQuery> = {
             status: "success",

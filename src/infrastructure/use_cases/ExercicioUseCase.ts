@@ -6,7 +6,7 @@ import ExercicioZodDTO from "../dtos/ExercicioZodDTO";
 
 export class ExercicioUseCase implements IUseCase<IExercicioCommand, IExercicioQuery> {
   constructor(private repository: ISequelizeRepository<IExercicioCommand, IExercicioQuery>) { }
-  
+
   async findAll(): Promise<IExercicioQuery[]> {
     return await this.repository.findAll();
   }
@@ -27,6 +27,8 @@ export class ExercicioUseCase implements IUseCase<IExercicioCommand, IExercicioQ
   }
 
   async create(data: IExercicioCommand): Promise<IExercicioQuery> {
+    ExercicioZodDTO.omit({ id: true }).parse(data);
+
     return await this.repository.create(data);
   }
 

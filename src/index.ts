@@ -14,6 +14,7 @@ import { ContentTypeApplicationJsonEnforceMiddleware } from './infrastructure/mi
 import { PostExerciciosHonoController } from './presentation/PostExerciciosHonoController'
 import { AppendContentTypeApplicationProblemJsonMiddleware } from './infrastructure/middlewares/AppendContentTypeApplicationProblemJsonMiddleware'
 import { ZodErrorMiddleware } from './infrastructure/middlewares/ZodErrorMiddleware'
+import { SequelizeErrorMiddleware } from './infrastructure/middlewares/SequelizeErrorMiddleware'
 
 const app = new Hono()
 
@@ -26,6 +27,7 @@ app.use(logger());
 app.use(AppendContentTypeApplicationProblemJsonMiddleware)
 app.use(ApplicationProblemJsonMiddleware)
 app.use(ZodErrorMiddleware)
+app.use(SequelizeErrorMiddleware)
 app.use(EmptyDataFieldMiddleware)
 
 // Request middlewares
