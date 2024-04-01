@@ -8,29 +8,36 @@ import { logger } from 'hono/logger'
 import { DatabaseSingletonFactory } from './infrastructure/database/DatabaseFactory'
 import { ESupportedDatabaseDrivers } from './domain/database/IDatabaseSingletonFactory'
 import { EmptyDataFieldMiddleware } from './infrastructure/middlewares/EmptyDataFieldMiddleware'
-import { ApplicationProblemJsonMiddleware } from './infrastructure/middlewares/ApplicationProblemJsonMiddleware'
 import { envLogger } from './infrastructure/libs/EnvFile'
+import { ApplicationProblemJsonMiddleware } from './infrastructure/middlewares/ApplicationProblemJsonMiddleware'
+import { ContentTypeApplicationJsonEnforceMiddleware } from './infrastructure/middlewares/ContentTypeApplicationJsonEnforceMiddleware'
+import { PostExerciciosHonoController } from './presentation/PostExerciciosHonoController'
+import { AppendContentTypeApplicationProblemJsonMiddleware } from './infrastructure/middlewares/AppendContentTypeApplicationProblemJsonMiddleware'
+import { ZodErrorMiddleware } from './infrastructure/middlewares/ZodErrorMiddleware'
 
 const app = new Hono()
 
 envLogger('.env')
 
 app.use(logger());
+
+
+// Response middlewares
+app.use(AppendContentTypeApplicationProblemJsonMiddleware)
 app.use(ApplicationProblemJsonMiddleware)
+app.use(ZodErrorMiddleware)
 app.use(EmptyDataFieldMiddleware)
+
+// Request middlewares
+app.use(ContentTypeApplicationJsonEnforceMiddleware)
 
 await new DatabaseSingletonFactory().createDatabase(ESupportedDatabaseDrivers.SQLITE).then((db) => db.connect())
 
 const exerciciosRepository = new SequelizeRepository<IExercicioCommand, IExercicioQuery>(ExercicioModel)
 
-app.get("/exercicios", async (c, next) => {
-  return await GetExerciciosHonoController.findAll(exerciciosRepository, c, next)
-})
-
-app.get("/exercicios/:id",
-  async (c, next) => {
-    return await GetExerciciosHonoController.findById(exerciciosRepository, c, next)
-  })
+app.get(`${process.env.ROUTE_EXERCICIOS}`, async (c, next) => await GetExerciciosHonoController.findAll(exerciciosRepository, c, next))
+app.get(`${process.env.ROUTE_EXERCICIOS}/:id`, async (c, next) => await GetExerciciosHonoController.findById(exerciciosRepository, c, next))
+app.post(`${process.env.ROUTE_EXERCICIOS}`, async (c, next) => await PostExerciciosHonoController.create(exerciciosRepository, c, next))
 
 app.get("/health", async (c) => {
   return c.json({ status: "ok" })

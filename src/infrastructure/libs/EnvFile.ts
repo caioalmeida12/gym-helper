@@ -2,6 +2,10 @@ import dotenv from 'dotenv';
 import fs from 'fs';
 import path from 'path';
 
+interface IConfigurations {
+    logging: boolean;
+}
+
 /**
  * Custom error class for representing an environment variable that is not set.
  */
@@ -16,7 +20,9 @@ export class EnvVariableNotSetError extends Error {
  * @param fileNames - The path to the dotenv file or an array of paths.
  * @throws {EnvVariableNotSetError} If a required environment variable is not set.
  */
-export function envLogger(fileNames: string[] | string): void {
+export function envLogger(fileNames: string[] | string, config: IConfigurations = {
+    logging: true
+}): void {
     const files = Array.isArray(fileNames) ? fileNames : [fileNames];
 
     files.forEach(fileName => {
@@ -31,7 +37,7 @@ export function envLogger(fileNames: string[] | string): void {
                 throw new EnvVariableNotSetError(dotenvPath, key);
             }
 
-            console.log(`✅ [${fileName}]: ${key} = ${value}`);
+            config.logging && console.log(`✅ [${fileName}]: ${key} = ${value}`);
         });
     });
 }

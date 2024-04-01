@@ -17,7 +17,7 @@ const ExercicioZodDTO = z.object({
     ),
     unidade_de_execucao: z.preprocess(
         (val) => String(val),
-        z.enum(['CARGA', 'TEMPO', 'REPETICOES', 'METROS']),
+        z.enum(['CARGA', 'REPETICOES', 'METROS', 'SEGUNDOS', 'MINUTOS']),
     ),
     dificuldade: z.preprocess(
         (val) => Number(val),

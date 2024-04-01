@@ -19,6 +19,5 @@ export const ApplicationProblemJsonMiddleware = async (c: Context, next: Next) =
                 instance: c.req.url
             }
         })
-        c.header("Content-Type", "application/problem+json")
     }
 }
