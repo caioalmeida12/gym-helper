@@ -4,21 +4,31 @@ import { Context, Next } from "hono";
 import { JSendSpec } from "@/domain/libs/APIResponse";
 import IExercicioRepository from "@/domain/repositories/IExercicioRepository";
 import ExercicioZodDTO from "@/infrastructure/dtos/ExercicioZodDTO";
+import { ZodError } from "zod";
 
 export class PostExerciciosHonoController {
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     static async create(repository: IExercicioRepository, c: Context, next: Next) {
         const useCase = new ExercicioUseCase(repository);
 
-        const parsed = ExercicioZodDTO.omit({ id: true }).parse(await c.req.json());
+        try {
+            const parsed = ExercicioZodDTO.omit({ id: true }).parse(await c.req.json());
 
-        const data = await useCase.create(parsed);
+            const data = await useCase.create(parsed);
 
-        const response: JSendSpec<IExercicioQuery> = {
-            status: "success",
-            data
-        };
+            const response: JSendSpec<IExercicioQuery> = {
+                status: "success",
+                data
+            };
 
-        return c.json(response);
+            console.log("PostExerciciosHonoController OK-> ", response)
+
+            return c.json(response);
+
+        } catch (error) {
+            console.log("PostExerciciosHonoController ERROR -> ", error instanceof ZodError)
+
+            throw error;
+        }
     }
 }

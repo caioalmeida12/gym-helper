@@ -1,5 +1,6 @@
 import { Context, Next } from "hono";
 import { ZodError } from "zod";
+import { ApplicationProblemJsonError } from "../libs/ApplicationProblemJson";
 
 export const ZodErrorMiddleware = async (c: Context, next: Next) => {
     try {
@@ -7,11 +8,10 @@ export const ZodErrorMiddleware = async (c: Context, next: Next) => {
     } catch (error) {
         if (!(error instanceof ZodError)) throw error;
 
-        c.status(400);
-        c.res = c.json({
-            status: "fail",
-            data: null,
-            message: error.errors
+        throw new ApplicationProblemJsonError({
+            detail: "Alguma das informações não foi fornecida de acordo com o esperado.",
+            status: 400,
+            fields: error.errors
         });
     }
 }

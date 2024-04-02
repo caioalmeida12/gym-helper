@@ -15,6 +15,7 @@ import { PostExerciciosHonoController } from './presentation/PostExerciciosHonoC
 import { AppendContentTypeApplicationProblemJsonMiddleware } from './infrastructure/middlewares/AppendContentTypeApplicationProblemJsonMiddleware'
 import { ZodErrorMiddleware } from './infrastructure/middlewares/ZodErrorMiddleware'
 import { SequelizeErrorMiddleware } from './infrastructure/middlewares/SequelizeErrorMiddleware'
+import { BodyIsValidJsonMiddleware } from './infrastructure/middlewares/BodyIsValidJsonMiddleware'
 
 const app = new Hono()
 
@@ -32,6 +33,7 @@ app.use(EmptyDataFieldMiddleware)
 
 // Request middlewares
 app.use(ContentTypeApplicationJsonEnforceMiddleware)
+app.use(BodyIsValidJsonMiddleware)
 
 await new DatabaseSingletonFactory().createDatabase(ESupportedDatabaseDrivers.SQLITE).then((db) => db.connect())
 
